@@ -5,6 +5,7 @@ import com.pokemonteambuilder.model.Team;
 import com.pokemonteambuilder.model.User;
 import com.pokemonteambuilder.repository.UserRepository;
 import com.pokemonteambuilder.service.TeamService;
+import com.pokemonteambuilder.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,14 @@ public class UserController {
     private TeamService teamService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @PostMapping(path="/add")
     public ResponseEntity<User> addNewUser (@RequestParam String userName) {
-        User user = new User();
-        user.setUsername(userName);
-        userRepository.save(user);
+        User user = userService.addUser(userName);
         return ResponseEntity.ok(user);
     }
 
